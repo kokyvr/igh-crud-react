@@ -20,7 +20,7 @@ function App() {
   useEffect(cargaProductos,[]);
 
   const onSubmit = (values) => {
-    
+    console.log(values);
     axios.post(`${api}`,values).then(()=>cargaProductos())
     .catch(error=>console.log(`Error :${error}`));
   }

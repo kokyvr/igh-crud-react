@@ -15,7 +15,7 @@ export default function FormProducto({ producto, onSubmit }) {
 
         form.reset();
     }
-
+   
     return (<div>
         <h3 className="mb-3">{producto ? 'Editar' : 'Nuevo'} Producto</h3>
         <AvForm ref={c => (form = c)} onValidSubmit={(_, values) => _onSubmit(values)}>
@@ -37,6 +37,8 @@ export default function FormProducto({ producto, onSubmit }) {
             <AvField name="marca" label="Marca Producto" required value={producto ? producto.marca : ''} />  
 
             </AvGroup>
+
+            <input name='file' accept='image/*' type='file' />
 
 
             <div>
