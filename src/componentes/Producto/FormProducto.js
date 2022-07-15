@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { AvForm, AvField, AvGroup } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
 
@@ -7,14 +7,33 @@ export default function FormProducto({ producto, onSubmit }) {
 
     let form = useRef();
 
+    const [imagen,setImagen] = useState();
 
+    const fileSelectHanlder = e=>{
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          if (fileReader.readyState === 2) {
+            let fd = new FormData();
+          
+            let image = e.target.files[0];
+            console.log(image);
+            fd.append('file',image,image.name);
+            setImagen(fd);
+            
+          }
+        };
+        fileReader.readAsDataURL(e.target.files[0]);
+      }
+    
 
     const _onSubmit = (values) => {
-
-        onSubmit(values);
+        console.log(imagen);
+        onSubmit({values,imagen});
 
         form.reset();
     }
+
+
    
     return (<div>
         <h3 className="mb-3">{producto ? 'Editar' : 'Nuevo'} Producto</h3>
@@ -38,7 +57,9 @@ export default function FormProducto({ producto, onSubmit }) {
 
             </AvGroup>
 
-            <input name='file' accept='image/*' type='file' />
+            <input name='file' accept='image/*' type='file' 
+                onChange={e=>fileSelectHanlder(e)}             
+            />
 
 
             <div>
